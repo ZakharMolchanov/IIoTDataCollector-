@@ -1,0 +1,172 @@
+
+/* Общие стили */
+body {
+    font-family: 'Open Sans', sans-serif; /* Применяем необычный шрифт */
+    background-color: #f2f2f2;
+    color: #333;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    transition: transform 0.3s ease;
+}
+
+.table:hover {
+    transform: scale(1.05); /* Анимация при наведении */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Стили для кнопок */
+button {
+    background-color: #5cb85c; /* Зеленый цвет кнопок */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px; /* Скругляем углы кнопок */
+}
+
+button:hover {
+    background-color: #4cae4c; /* Темнее зеленый при наведении */
+}
+
+/* Стили для форм */
+form {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Стили для контейнера таблицы и формы */
+.table-and-form-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 20px;
+}
+
+.table-container {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.form-container {
+    flex: 1;
+}
+/* Стили для формы поиска */
+.search-form {
+    display: flex;
+    align-items: center;
+}
+
+.search-input {
+    flex: 1;
+    width: calc(100% - 110px); /* Ширина поля ввода с учетом ширины кнопки "Найти" */
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px; /* Скругление левого края поля ввода */
+}
+
+.search-button {
+    background-color: #5cb85c; /* Зеленый цвет кнопки */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 0 5px 5px 0; /* Скругление правого края кнопки */
+}
+
+.search-button:hover {
+    background-color: #4cae4c; /* Темнее зеленый при наведении */
+}
+
+
+/* Стили для кнопки "Удалить" */
+.delete-button {
+    background-color: #ff3333; /* Красный цвет кнопки */
+    color: #fff;
+    border: none;
+    padding: 5px 10px; /* Уменьшаем отступы */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 50%; /* Круглая форма */
+    font-size: 14px; /* Уменьшаем размер текста */
+    margin: auto; /* Центрируем кнопку */
+    display: block; /* Сделаем кнопку блочным элементом */
+}
+/* Стили для формы добавления устройства */
+.add-device-form {
+    background-color: #f0f0f0; /* Светло-серый фон */
+    padding: 20px;
+    border-radius: 10px; /* Закругляем углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    margin-top: 20px; /* Отступ сверху */
+}
+/* Стили для кнопки "Подробнее" */
+.description_device {
+    color: #fff;
+    border: none;
+    padding: 5px 10px; /* Уменьшаем отступы */
+    cursor: pointer;
+    border-radius: 5px; /* Скругляем углы кнопки */
+    font-size: 14px; /* Уменьшаем размер текста */
+    font-family: 'Open Sans', sans-serif; /* Применяем необычный шрифт */
+}
+
+
+
+/* Стили для кнопки "Удалить" */
+.delete-button {
+    background-color: #ff3333; /* Красный цвет кнопки */
+    color: #fff;
+    border: none;
+    padding: 5px 10px; /* Уменьшаем отступы */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 50%; /* Круглая форма */
+    font-size: 14px; /* Уменьшаем размер текста */
+    margin: auto; /* Центрируем кнопку */
+    display: block; /* Сделаем кнопку блочным элементом */
+}
+
+
+/* Стили для формы добавления устройства */
+.add-device-form {
+    background-color: #f0f0f0; /* Светло-серый фон */
+    padding: 20px;
+    border-radius: 10px; /* Закругляем углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+    margin-top: 20px; /* Отступ сверху */
+}

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подробная информация об устройстве</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/device.css')}}"/>
+</head>
+
+<body>
+<div class="navigation">
+    <a href="{{ url_for('index') }}">Вернуться к списку устройств</a>
+</div>
+
+<h1>Подробная информация об устройстве</h1>
+
+<div class="container">
+    <div class="device-forms">
+        <form class="device-info-form" action="{{ url_for('update_device_info', device_id=device.device_id) }}"
+              method="post">
+            <ul>
+                <li><strong>Имя устройства:</strong> <input type="text" name="device_name"
+                                                            value="{{ device.device_name }}">
+                </li>
+                <li><strong>Широта:</strong> <input type="text" name="latitude" value="{{ device.latitude }}"></li>
+                <li><strong>Долгота:</strong> <input type="text" name="longitude" value="{{ device.longitude }}"></li>
+            </ul>
+            <button type="submit">Сохранить изменения</button>
+        </form>
+
+        <form class="device-settings-form" action="{{ url_for('update_settings', device_id=device.device_id) }}"
+              method="post">
+            <ul>
+                <li><strong>IP:</strong> <input type="text" name="ip" value="{{ settings.ip }}"
+                                                title="Введите правильный IP-адрес"></li>
+                <li><strong>Порт:</strong> <input type="number" name="port" value="{{ settings.port }}"></li>
+                <li><strong>Slave ID:</strong> <input type="number" name="slave_id" value="{{ settings.slave_id }}">
+                </li>
+            </ul>
+            <button type="submit">Сохранить настройки</button>
+        </form>
+    </div>
+
+    <div class="container-description">
+        <div class="description-forms">
+            <h2>Описание устройства:</h2>
+            <table class="device-description-table">
+                <tr>
+                    <th>Название описания</th>
+                    <th>Содержимое</th>
+                    <th></th>
+                </tr>
+                {% for description in descriptions %}
+                <tr>
+                    <td>{{ description.description_name }}</td>
+                    <td>{{ description.content }}</td>
+                    <td>
+                        <button class="editDescription" data-description-id="{{ description.description_id }}">
+                            Редактировать
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="add-description-form">
+            <h2>Добавить/Редактировать описание устройства:</h2>
+            <form class="add-edit-description-form"
+                  action="{{ url_for('add_or_edit_description', device_id=device.device_id) }}"
+                  method="post">
+                <p><strong>Название описания:</strong> <input type="text" name="description_name" required></p>
+                <p><strong>Содержимое:</strong> <textarea name="content" rows="4" cols="50" required></textarea></p>
+                <button type="submit">Добавить/Редактировать описание</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container-tags">
+    <div class="tags">
+        <h2 class="tags_title">Переменные устройства:</h2>
+        <table class="device-tags-table">
+            <tr>
+                <th>Название переменной</th>
+                <th>Описание</th>
+                <th>Регистр</th>
+            </tr>
+            {% for tag in tags %}
+            <tr>
+                <td>{{ tag.tag_name }}</td>
+                <td>{{ tag.description }}</td>
+                <td>{{ tag.register }}</td>
+                <td>
+                    <!-- Кнопки "Изменить" и "Удалить" ссылаются на соответствующие URL -->
+                    <button class="editTag" data-tag-id="{{ tag.tag_id }}">Редактировать</button>
+                    <form class="delete_tag" action="{{ url_for('delete_tag', tag_id=tag.tag_id) }}" method="post">
+                        <button type="submit">Удалить</button>
+                    </form>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="add-tag-form">
+        <h2>Добавить переменную устройства:</h2>
+        <form class="add-tag-form" name="editTagForm" action="{{ url_for('add_tag', device_id=device.device_id) }}"
+              method="post" style="display: block;">
+            <p><strong>Название переменной:</strong> <input type="text" name="tag_name"></p>
+            <p><strong>Описание:</strong> <input type="text" name="description"></p>
+            <p><strong>Регистр:</strong> <input type="number" name="register"></p>
+            <input type="hidden" name="tag_id">
+            <button type="submit">Сохранить изменения</button>
+        </form>
+    </div>
+</div>
+<form action="{{ url_for('start_processing', device_id=device.device_id) }}" method="post">
+    <div class="start-data-collection">
+        <button type="submit" id="startCollectionBtn">Начать сбор данных</button>
+    </div>
+</form>
+<form action="{{ url_for('stop_processing', device_id=device.device_id) }}" method="post">
+    <div class="stop-processing">
+        <button type="submit" id="stopProcessingBtn">Остановить сбор данных</button>
+    </div>
+</form>
+
+
+<script>
+    // jQuery код для маскирования IP-адреса и обработки кликов
+    $(document).ready(function() {
+        $('input[name="ip"]').mask('0ZZ.0ZZ.0ZZ.0ZZ', {
+            translation: {
+                'Z': {
+                    pattern: /[0-9]/,
+                    optional: true
+                }
+            }
+        });
+
+        $('.editDescription').click(function() {
+            var descriptionId = $(this).data('description-id');
+            var descriptionRow = $(this).closest('tr');
+            var descriptionName = descriptionRow.find('td:eq(0)').text();
+            var descriptionContent = descriptionRow.find('td:eq(1)').text();
+
+            $('input[name="description_name"]').val(descriptionName);
+            $('textarea[name="content"]').val(descriptionContent);
+
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'description_id',
+                value: descriptionId
+            }).appendTo('form[action="{{ url_for('add_or_edit_description', device_id=device.device_id) }}"]');
+
+            $('form[action="{{ url_for('add_or_edit_description', device_id=device.device_id) }}"]').hide();
+            $('form[action="{{ url_for('add_or_edit_description', device_id=device.device_id) }}"]').show();
+        });
+    });
+
+    // JavaScript код для обработки кликов на кнопке "Изменить"
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('form[name="addTagForm"]').style.display = 'block';
+    });
+
+    document.querySelectorAll('.editTag').forEach(button => {
+        button.addEventListener('click', function() {
+            const tagId = button.getAttribute('data-tag-id');
+            const tagName = button.parentElement.parentElement.querySelector('td:nth-child(1)').innerText;
+            const description = button.parentElement.parentElement.querySelector('td:nth-child(2)').innerText;
+            const register = button.parentElement.parentElement.querySelector('td:nth-child(3)').innerText;
+
+            document.querySelector('form[name="editTagForm"] input[name="tag_name"]').value = tagName;
+            document.querySelector('form[name="editTagForm"] input[name="description"]').value = description;
+            document.querySelector('form[name="editTagForm"] input[name="register"]').value = register;
+
+            document.querySelector('form[name="editTagForm"] input[name="tag_id"]').value = tagId;
+
+            document.querySelector('form[name="editTagForm"]').style.display = 'block';
+            document.querySelector('form[name="addTagForm"]').style.display = 'none';
+        });
+    });
+</script>
+<script>
+    // Обработка ответа от сервера
+    document.addEventListener('DOMContentLoaded', function() {
+        // Функция, которая будет вызвана при успешном запуске процессов
+        function handleSuccess() {
+            alert('Процессы успешно запущены, InfluxDB: http://localhost:8086/');
+        }
+
+        // Функция, которая будет вызвана в случае ошибки
+        function handleError(message) {
+            alert('Произошла ошибка: ' + message);
+        }
+
+        // Отправка формы
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this)
+            })
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Сервер вернул ошибку ' + response.status);
+                }
+                handleSuccess();
+            })
+            .catch(function(error) {
+                handleError(error.message);
+            });
+        });
+    });
+</script>
+</body>
+
+</html>

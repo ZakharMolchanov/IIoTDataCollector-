@@ -1,0 +1,171 @@
+/* Общие стили */
+body {
+    font-family: 'Open Sans', sans-serif; /* Применяем необычный шрифт */
+    background-color: #f2f2f2;
+    color: #333;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Стили для таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Добавляем тень */
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+/* Стили для кнопок */
+button {
+    background-color: #5cb85c; /* Зеленый цвет кнопок */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 5px; /* Скругляем углы кнопок */
+}
+
+button:hover {
+    background-color: #4cae4c; /* Темнее зеленый при наведении */
+}
+
+
+
+/* Стили для кнопок внутри формы */
+form button {
+    width: 100%; /* Ширина кнопки равна ширине формы */
+    margin-top: 10px; /* Отступ сверху от предыдущего элемента */
+}
+
+/* Стили для поля ввода внутри формы */
+form input[type="text"],
+form input[type="number"],
+form textarea {
+    width: calc(100% - 20px); /* Ширина поля ввода с учетом внутренних отступов */
+    padding: 10px; /* Внутренние отступы */
+    margin: 5px 0; /* Внешние отступы */
+    border: 1px solid #ccc; /* Рамка вокруг поля ввода */
+    border-radius: 5px; /* Закругленные углы */
+}
+
+
+/* Стили для ссылок */
+a {
+    color: #007bff; /* Синий цвет ссылок */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркиваем ссылку при наведении */
+}
+
+/* Стили для заголовков */
+h1, h2 {
+    margin-top: 20px;
+}
+
+/* Стили для навигации */
+.navigation {
+    margin-bottom: 20px;
+}
+.device-forms {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Равномерно распределить пространство между формами */
+    align-items: center; /* Выровнять элементы по вертикали по центру */
+    margin-bottom: 20px; /* Добавить отступ снизу для разделения от других элементов */
+}
+
+.device-forms form {
+    flex: 1; /* Растянуть формы, чтобы они занимали равные доли от доступного пространства */
+    margin-right: 10px; /* Добавить небольшой отступ между формами */
+}
+
+.container-description {
+    display: flex;
+    align-items: flex-start; /* Выравнивание контейнера по верхнему краю */
+}
+
+.description-forms {
+    flex: 1; /* Занимает все доступное пространство */
+    margin-right: 20px; /* Добавляет отступ между элементами */
+}
+
+.add-description-form {
+    flex: 1; /* Занимает все доступное пространство */
+}
+.container-tags {
+    display: flex;
+    align-items: flex-start; /* Выравнивание по верхнему краю */
+    margin-top: 20px; /* Добавим отступ сверху */
+}
+
+.tags {
+    flex: 1; /* Растягиваем на всю доступную ширину */
+}
+
+.add-tag-form {
+    flex: 1; /* Растягиваем на всю доступную ширину */
+     max-width: 400px; /* Ширина формы */
+
+}
+.start-data-collection {
+        text-align: center;
+    }
+.device-tags-table {
+    width: 80%; /* Уменьшаем ширину таблицы */
+    border-collapse: collapse;
+    margin-bottom: 10px; /* Добавляем небольшой отступ снизу */
+}
+
+.device-tags-table th,
+.device-tags-table td {
+    border: 1px solid #ddd;
+    padding: 5px; /* Уменьшаем отступы */
+    text-align: left;
+
+}
+.tags_title {
+    font-size: 1.3rem; /* Уменьшаем размер шрифта */
+    margin-bottom: 5px; /* Уменьшаем отступ снизу */
+    overflow: hidden; /* Скрыть часть текста, выходящую за пределы максимальной ширины */
+    text-overflow: ellipsis; /* Заменяем скрытую часть текста многоточием */
+    white-space: nowrap; /* Запрет переноса строки */
+}
+.tags {
+    max-width: 700px; /* Устанавливаем максимальную ширину блока */
+    margin-left: 20px; /* Добавляем отступ от левого края */
+}
+
+
+
+.add-tag-form {
+    max-width: 400px; /* Ширина формы */
+}
+
+.delete_tag {
+    display: inline-block; /* Размещаем форму в строку, а не блоком */
+    margin-top: 0; /* Удаляем отступ */
+}
+
+.delete_tag button[type="submit"] {
+    background-color: #f44336; /* Красный цвет */
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: auto; /* Автоматический размер кнопки */
+    height: auto; /* Автоматический размер кнопки */
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список Устройств</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+          rel="stylesheet"/>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Список Устройств</h1>
+    <div class="table-and-form-container">
+        <div class="table-container">
+            <!-- Таблица устройств -->
+            <form class="search-form" action="{{ url_for('search_device') }}" method="GET">
+                <input class="search-input" type="text" name="search_query" placeholder="Поиск..." required>
+                <button class="search-button" type="submit">Найти</button>
+            </form>
+            <table border="1" class="table">
+                <thead>
+                <tr>
+                    <th>Название Устройства</th>
+                    <th>Широта</th>
+                    <th>Долгота</th>
+                    <th>Подробнее</th> <!-- Новый столбец для кнопки "Подробнее" -->
+                </tr>
+                </thead>
+                <tbody>
+                {% for device in devices %}
+                <tr>
+                    <td>{{ device.device_name }}</td>
+                    <td>{{ device.latitude }}</td>
+                    <td>{{ device.longitude }}</td>
+                    <td class="description_device"><a
+                            href="{{ url_for('device_details', device_id=device.device_id) }}">Подробнее</a></td>
+                    <td>
+                        <form action="{{ url_for('delete_device', device_id=device.device_id) }}" method="post">
+                            <button type="submit">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <!-- Форма добавления устройства -->
+            <form action="{{ url_for('create_device') }}" method="POST" onsubmit="return validateForm()"
+                  class="add-device-form">
+                <h2>Добавить Устройство</h2>
+                <label for="device_name">Название Устройства:</label>
+                <input type="text" id="device_name" name="device_name" required><br><br>
+                <label for="latitude">Широта:</label>
+                <input type="number" id="latitude" name="latitude" min="-90" max="90" step="0.000001" required><br><br>
+                <label for="longitude">Долгота:</label>
+                <input type="number" id="longitude" name="longitude" min="-180" max="180" step="0.000001"
+                       required><br><br>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
